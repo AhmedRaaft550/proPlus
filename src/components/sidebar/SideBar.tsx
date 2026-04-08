@@ -1,7 +1,5 @@
 "use client";
 
-import React from "react";
-
 import { usePathname } from "next/navigation";
 import Logo from "@/custom/ui/Logo";
 import { ListBox, Separator } from "@heroui/react";
@@ -10,11 +8,20 @@ import {
   MENU_ITEMS,
   SECONDARY_ITEMS,
 } from "../../constants/sidebar-const/sideBar-const";
-
 import { LuLogOut } from "react-icons/lu";
+import { actionServices } from "@/services/actionsServices";
+import { useRouter } from "next/navigation";
 
 export default function Sidebar() {
   const pathname = usePathname();
+  const router = useRouter();
+
+  const logOut = async () => {
+    const res = await actionServices.handleLogoutFunc();
+    if (res?.success) {
+      router.push("/");
+    }
+  };
 
   return (
     <aside className="w-72 h-screen border-r border-divider flex flex-col sticky top-0 bg-background">
@@ -49,17 +56,18 @@ export default function Sidebar() {
       </div>
 
       {/* Logout Section */}
-      <div className="p-4 border-t border-divider">
-        <ListBox aria-label="Logout" className="p-0">
+      <div className="p-4 border-t border-divider ">
+        <ListBox aria-label="Logout" className="p-0" onClick={logOut}>
           <ListBox.Item
             key="logout"
             id="logout"
             textValue="Logout"
             className="text-danger h-11 px-4 rounded-medium hover:bg-danger/10 transition-colors"
           >
-            <div className="flex items-center gap-3 font-semibold">
+            <div className="flex items-center gap-3 font-semibold w-full">
               <LuLogOut className="text-xl" />
-              <span>Logout</span>
+
+              <span aria-label="logout">Logout</span>
             </div>
           </ListBox.Item>
         </ListBox>
