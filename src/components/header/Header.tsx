@@ -1,7 +1,20 @@
+"use client";
+
 import Logo from "@/custom/ui/Logo";
 import { Button, Avatar } from "@heroui/react";
+import { useRouter } from "next/navigation";
+import { actionServices } from "@/services/actionsServices";
 
 const Header = () => {
+  const router = useRouter();
+
+  const logOut = async () => {
+    const res = await actionServices.handleLogoutFunc();
+    if (res?.success) {
+      router.push("/");
+    }
+  };
+
   return (
     <header className="h-16 border-b border-divider bg-background/70 backdrop-blur-md sticky top-0 z-40 w-full px-6 flex justify-between items-center">
       <Logo />
@@ -10,9 +23,9 @@ const Header = () => {
         <ul className="flex items-center gap-4">
           <li>
             <Button
+              onClick={logOut}
               size="sm"
               variant="primary"
-              // color="danger"
               className="font-medium"
             >
               Log out
