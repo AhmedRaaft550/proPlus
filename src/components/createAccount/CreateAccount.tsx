@@ -8,6 +8,8 @@ import { createAccountValidation } from "@/validation/formsValidation/unAuthLayo
 import MainForm from "@/custom/ui/customForm/MainForm";
 import FormHeaderMsg from "@/custom/ui/FormHeaderMsg";
 import { Button, Form } from "@heroui/react";
+import { handleSignupAction } from "@/actions/supabseSignupAction";
+import { showToast } from "@/helper/toast";
 
 export type TCreateAccount = z.infer<typeof createAccountValidation>;
 
@@ -22,11 +24,17 @@ const CreateAccount = ({ onBackToLogin }: { onBackToLogin: () => void }) => {
     mode: "onChange",
   });
 
-  const handleSubmitFrom = (data: TCreateAccount) => {
-    console.log("Register Data:", data);
-  };
+  // supabase should be handled here
+  const handleSubmitFrom = async (data: TCreateAccount) => {
+    const result = await handleSignupAction(data);
 
-  console.log(errors);
+    if (result?.success === false) {
+      showToast(result.message, "error");
+    } else {
+      showToast(result.message, "success");
+      onBackToLogin();
+    }
+  };
 
   return (
     <div className="space-y-8">
@@ -52,7 +60,7 @@ const CreateAccount = ({ onBackToLogin }: { onBackToLogin: () => void }) => {
         <div className="flex flex-col gap-3 pt-4">
           <Button
             type="submit"
-            className="bg-sky-600 hover:bg-sky-700 text-white font-bold h-12 rounded-xl shadow-lg shadow-sky-200 transition-all active:scale-95"
+            className="bg-sky-600 w-full hover:bg-sky-700 text-white font-bold h-12 rounded-xl shadow-lg shadow-sky-200 transition-all active:scale-95"
           >
             Create Account
           </Button>

@@ -11,11 +11,15 @@ import FormHeaderMsg from "@/custom/ui/FormHeaderMsg";
 import CreateAccount from "../createAccount/CreateAccount";
 import { Button, Form, Description } from "@heroui/react";
 import BrandingSection from "./BrandingSection";
+import { supabaseLoginAction } from "@/actions/supabaseLoginAction";
+import { showToast } from "@/helper/toast";
+import { useRouter } from "next/navigation";
 
 export type DataTypes = z.infer<typeof unAuthLayoutValidation>;
 
 function UnAuthLayout() {
   const [isLogin, setIsLogin] = useState(true);
+  const router = useRouter();
 
   const {
     handleSubmit,
@@ -27,8 +31,15 @@ function UnAuthLayout() {
     mode: "onChange",
   });
 
-  const handleSubmitFrom = (data: DataTypes) => {
-    console.log("Login Data:", data);
+  const handleSubmitFrom = async (data: DataTypes) => {
+    const result = await supabaseLoginAction(data);
+
+    if (result?.success === false) {
+      showToast(result.message, "error");
+    } else {
+      showToast(result?.message, "success");
+      router.replace("/dashboard");
+    }
   };
 
   return (
@@ -81,7 +92,7 @@ function UnAuthLayout() {
                   <div className="flex flex-col gap-3 pt-4">
                     <Button
                       type="submit"
-                      className="bg-sky-600 text-white h-12 rounded-xl shadow-lg shadow-sky-200 transition-all active:scale-95"
+                      className="bg-sky-600 w-full hover:bg-sky-700 text-white h-12 rounded-xl shadow-lg shadow-sky-200 transition-all active:scale-95"
                     >
                       Sign In to Dashboard
                     </Button>
