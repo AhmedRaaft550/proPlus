@@ -46,7 +46,7 @@ function UnAuthLayout() {
     <section className="flex min-h-screen bg-sky-50">
       <BrandingSection />
 
-      <div className="w-full lg:w-1/2 flex items-center justify-center p-8 relative">
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-8 relative h-screen overflow-hidden">
         <div className="w-full max-w-md space-y-8">
           <AnimatePresence mode="wait">
             {isLogin ? (

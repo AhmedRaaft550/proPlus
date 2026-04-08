@@ -37,7 +37,7 @@ const CreateAccount = ({ onBackToLogin }: { onBackToLogin: () => void }) => {
   };
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 ">
       <FormHeaderMsg
         welcomeMsg="Create your account"
         title="It's quick and easy."
