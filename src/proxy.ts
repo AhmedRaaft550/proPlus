@@ -7,8 +7,6 @@ export async function proxy(request: NextRequest) {
   const token = cookiesStore.get("sb-mekvaxxeanyhvxexeqxh-auth-token")?.value;
   const isLoginPage = request.nextUrl.pathname === "/";
 
-  console.log("cookiesStore", cookiesStore);
-
   if (token && isLoginPage) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
   }
