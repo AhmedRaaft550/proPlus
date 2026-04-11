@@ -27,7 +27,6 @@ const CreateAccount = ({ onBackToLogin }: { onBackToLogin: () => void }) => {
   // supabase should be handled here
   const handleSubmitFrom = async (data: TCreateAccount) => {
     const result = await handleSignupAction(data);
-
     if (result?.success === false) {
       showToast(result.message, "error");
     } else {

@@ -8,8 +8,15 @@ import {
   LuTable2,
   LuCircle,
 } from "react-icons/lu";
+import { ImProfile } from "react-icons/im";
 
 export const MENU_ITEMS = [
+  {
+    key: "profile",
+    label: "Profile",
+    icon: <ImProfile />,
+    href: "/profile",
+  },
   {
     key: "dashboard",
     label: "Dashboard",
