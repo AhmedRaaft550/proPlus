@@ -34,7 +34,6 @@ const ProfileLayout = ({
   return (
     <section className="min-h-screen bg-slate-50/50 pb-12 relative ">
       {ifNewEmail && (
-        // <div className="sticky top-0 z-100 w-full  py-2 text-center shadow-md">
         <Alert status="warning" className="mb-4  ">
           <Alert.Indicator className="text-red-500" />
           <Alert.Content>
@@ -48,7 +47,6 @@ const ProfileLayout = ({
             </Alert.Description>
           </Alert.Content>
         </Alert>
-        // </div>
       )}
       {/* 1. Header Area - Fixed Height for consistency */}
       <div className="h-72 w-full relative bg-slate-900 overflow-hidden rounded-lg">
