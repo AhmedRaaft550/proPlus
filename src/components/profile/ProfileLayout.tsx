@@ -1,5 +1,6 @@
 import React from "react";
-import { Card, Avatar, Separator, Chip } from "@heroui/react";
+import { Card, Avatar, Separator, Chip, Alert } from "@heroui/react";
+
 import Image from "next/image";
 import {
   MdOutlineEmail,
@@ -9,6 +10,9 @@ import {
 import { FaLocationDot } from "react-icons/fa6";
 import EditProfileBtn from "./EditProfileBtn";
 import { IUser } from "@/types/app";
+import dayjs from "dayjs";
+// handle the expiration date
+
 const ProfileLayout = ({
   user,
   joinedDate,
@@ -21,8 +25,31 @@ const ProfileLayout = ({
     country: string;
   };
 }) => {
+  const ifNewEmail = user?.new_email;
+
+  const accountCreationDate = user?.created_at;
+  const expirationData =
+    dayjs(accountCreationDate).add(1, "year").format("MMM D, YYYY") || "N/A";
+
   return (
-    <section className="min-h-screen bg-slate-50/50 pb-12">
+    <section className="min-h-screen bg-slate-50/50 pb-12 relative ">
+      {ifNewEmail && (
+        // <div className="sticky top-0 z-100 w-full  py-2 text-center shadow-md">
+        <Alert status="warning" className="mb-4  ">
+          <Alert.Indicator className="text-red-500" />
+          <Alert.Content>
+            <Alert.Title className="text-red-500 font-semibold">
+              Email Update Notice :
+            </Alert.Title>
+            <Alert.Description>
+              the confirmation email has sent to the new email{" "}
+              <span className="text-red-900 font-semibold">{ifNewEmail}</span>,
+              Please verify the new email for secure and full access, Thank you
+            </Alert.Description>
+          </Alert.Content>
+        </Alert>
+        // </div>
+      )}
       {/* 1. Header Area - Fixed Height for consistency */}
       <div className="h-72 w-full relative bg-slate-900 overflow-hidden rounded-lg">
         <Image
@@ -36,7 +63,7 @@ const ProfileLayout = ({
       </div>
 
       {/* 2. Content Wrapper */}
-      <div className="max-w-5xl mx-auto px-6 mt-3 relative z-20 ">
+      <div className="w-full mx-auto px-6 mt-3 relative z-20 ">
         <div className="flex flex-col gap-8">
           {/* Profile Header Card */}
           <Card
@@ -51,24 +78,24 @@ const ProfileLayout = ({
                     alt="user avatar"
                     src=""
                   />
-                  <Avatar.Fallback className="capitalize font-bold ">
+                  <Avatar.Fallback className="capitalize bg-sky-900 text-white font-bold border-2 rounded-full border-sky-600">
                     {user?.user_metadata?.name?.slice(0, 2) || "P"}
                   </Avatar.Fallback>
                 </Avatar>
               </div>
 
               <div className="flex-1 text-center md:text-left space-y-1">
-                <Card.Title className="text-3xl capitalize font-bold text-slate-900 tracking-tight">
+                <Card.Title className="text-3xl capitalize font-bold text-sky-800 tracking-tight">
                   {user?.user_metadata?.name || "User Name"}
                 </Card.Title>
                 <div className="flex flex-col ml-3 items-start justify-start md:justify-start">
-                  <Card.Description className="text-slate-500 font-semibold  ">
+                  <Card.Description className="text-green-600 capitalize font-semibold  ">
                     {user?.aud || "user verification status"} user
                   </Card.Description>
                   <Card.Description className="flex justify-center items-center gap-2">
                     <FaLocationDot />
                     {`${userLocation?.city} ${userLocation?.country}` ||
-                      "Location"}
+                      "Location not set"}
                   </Card.Description>
                 </div>
               </div>
@@ -93,8 +120,8 @@ const ProfileLayout = ({
                   </div>
                   <Chip
                     variant="primary"
-                    color="success"
-                    size="sm"
+                    color="accent"
+                    size="lg"
                     className="font-bold"
                   >
                     Personal Account
@@ -117,7 +144,7 @@ const ProfileLayout = ({
                     </div>
                   </div>
 
-                  <Separator className="bg-slate-100" />
+                  <Separator className="bg-sky-500" />
 
                   {/* Row 2: Email */}
                   <div className="flex items-start gap-5">
@@ -134,7 +161,7 @@ const ProfileLayout = ({
                     </div>
                   </div>
 
-                  <Separator className="bg-slate-100" />
+                  <Separator className="bg-sky-500" />
 
                   {/* Row 3: Date */}
                   <div className="flex items-start gap-5">
@@ -147,6 +174,9 @@ const ProfileLayout = ({
                       </label>
                       <p className="text-slate-700 font-bold text-lg">
                         {joinedDate || "Joined Date"}
+                      </p>
+                      <p className="text-red-700 text-sm font-semibold">
+                        expires on {expirationData}
                       </p>
                     </div>
                   </div>
@@ -163,13 +193,21 @@ const ProfileLayout = ({
                 </h4>
                 <div className="flex items-center gap-4 mb-4">
                   <div className="relative">
-                    <div className="w-3 h-3 rounded-full bg-green-500 shadow-[0_0_15px_rgba(34,197,94,0.6)]" />
-                    <div className="absolute inset-0 w-3 h-3 rounded-full bg-green-500 animate-ping opacity-75" />
+                    <div
+                      className={`w-3 h-3 rounded-full ${ifNewEmail ? "bg-red-500" : "bg-green-500"} shadow-[0_0_15px_rgba(34,197,94,0.6)]`}
+                    />
+                    <div
+                      className={`absolute inset-0 w-3 h-3 rounded-full ${ifNewEmail ? "bg-red-500" : "bg-green-500"} animate-ping opacity-75`}
+                    />
                   </div>
-                  <span className="text-lg font-bold">Authenticated</span>
+                  <span className="text-lg font-bold">
+                    {ifNewEmail ? "Unverified" : "Verified"}
+                  </span>
                 </div>
                 <p className="text-sm text-slate-400 leading-relaxed">
-                  Your email is verified and your session is secure.
+                  {ifNewEmail
+                    ? "Confirmation email has sent to your new email address. Please check your email to verify your account."
+                    : "Your email is verified and your session is secure."}
                 </p>
               </Card>
             </div>

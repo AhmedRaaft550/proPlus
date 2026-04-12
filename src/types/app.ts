@@ -10,6 +10,7 @@ export interface IUser {
   created_at: string;
   updated_at?: string;
   is_anonymous?: boolean;
+  new_email?: string;
 
   app_metadata: {
     provider?: string;

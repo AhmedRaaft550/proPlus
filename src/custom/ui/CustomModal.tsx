@@ -31,7 +31,7 @@ export function CustomModal({ isOpen, setIsOpen, user }: CustomModalProps) {
             <Modal.Body>
               <ModalForm user={user} setIsOpen={setIsOpen} />
             </Modal.Body>
-            <Modal.CloseTrigger />
+            <Modal.CloseTrigger className="text-sky-600 " />
           </Modal.Dialog>
         </Modal.Container>
       </Modal.Backdrop>
