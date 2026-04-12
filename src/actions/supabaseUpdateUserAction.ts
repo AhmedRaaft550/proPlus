@@ -1,5 +1,6 @@
 "use server";
 import { createClient } from "@/lib/subabase/server";
+import { revalidatePath } from "next/cache";
 
 export const handleUpdateUserData = async (email: string, name: string) => {
   const supabase = await createClient();
@@ -23,6 +24,8 @@ export const handleUpdateUserData = async (email: string, name: string) => {
       message: error.message || "Update failed, please try again",
     };
   }
+
+  revalidatePath("/profile");
 
   if (ifEmailChanged) {
     return {

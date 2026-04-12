@@ -10,8 +10,12 @@ const EditProfileBtn = ({ user }: { user: IUser | undefined | null }) => {
 
   return (
     <>
-      <Button variant="secondary" onClick={() => setIsOpen(true)}>
-        Edit Profile
+      <Button
+        variant="secondary"
+        className="hover:scale-105 transition-transform duration-200 font-bold"
+        onClick={() => setIsOpen(true)}
+      >
+        Update Information
       </Button>
 
       <CustomModal isOpen={isOpen} setIsOpen={setIsOpen} user={user} />

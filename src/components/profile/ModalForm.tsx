@@ -5,7 +5,6 @@ import { showToast } from "@/helper/toast";
 import { updateUserDataSchema } from "@/validation/formsValidation/unAuthLayoutValidation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/navigation";
-
 import { Button } from "@heroui/react";
 
 type UpdateForm = {
@@ -32,6 +31,8 @@ const ModalForm = ({
     },
   });
   const router = useRouter();
+
+  console.log(user);
 
   const updateData = async (data: { email: string; name: string }) => {
     // check if the user has made any changes
