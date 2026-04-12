@@ -16,15 +16,20 @@ export const unAuthLayoutValidation = z.object({
     ),
 });
 
-export const createAccountValidation = unAuthLayoutValidation
-  .extend({
-    name: z
-      .string()
-      .min(5, "Name must be at least 5 characters long")
-      .max(50, "Name must be at most 50 characters long"),
-    confirmPassword: z.string(),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords don't match",
-    path: ["confirmPassword"],
-  });
+const baseSchema = unAuthLayoutValidation.extend({
+  name: z
+    .string()
+    .min(5, "Name must be at least 5 characters long")
+    .max(50, "Name must be at most 50 characters long"),
+  confirmPassword: z.string(),
+});
+
+export const createAccountValidation = baseSchema.refine(
+  (data) => data.password === data.confirmPassword,
+  { message: "Passwords don't match", path: ["confirmPassword"] },
+);
+
+export const updateUserDataSchema = baseSchema.pick({
+  name: true,
+  email: true,
+});
