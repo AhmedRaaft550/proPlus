@@ -1,2 +1,23 @@
 @import "tailwindcss";
 @import "@heroui/styles";
+
+@layer components {
+  .table__cell {
+    @apply text-black/70  px-4 py-5 font-semibold rounded-none border-b  border-black;
+  }
+
+  .table__header {
+    @apply px-4 py-5 font-semibold rounded-none;
+  }
+
+  .select__trigger {
+    @apply rounded-md border  border-sky-600 p-3;
+  }
+  .select__popover {
+    @apply rounded-md border border-border  p-2;
+  }
+
+  .select__value {
+    @apply text-sky-700 font-semibold;
+  }
+}
