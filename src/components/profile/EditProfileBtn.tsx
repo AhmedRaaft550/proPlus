@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "@heroui/react";
-import CustomModal from "@/custom/ui/CustomModal";
+import CustomModal from "@/custom/ui/modals/CustomModal";
 import { IUser } from "@/types/app";
 
 const EditProfileBtn = ({ user }: { user: IUser | undefined | null }) => {

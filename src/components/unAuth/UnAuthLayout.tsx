@@ -38,7 +38,7 @@ function UnAuthLayout() {
       showToast(result.message, "error");
     } else {
       showToast(result?.message, "success");
-      router.replace("/profile");
+      router.replace("/dashboard");
     }
   };
 

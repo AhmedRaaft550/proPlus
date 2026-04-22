@@ -3,6 +3,10 @@ import Projects from "@/components/projects/Projects";
 const page = async () => {
   const projectsData = await endPointServices("projects");
 
+  if (!projectsData) {
+    return;
+  }
+
   return (
     <>
       <Projects projectsData={projectsData} />

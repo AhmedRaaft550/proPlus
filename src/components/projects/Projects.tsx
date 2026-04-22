@@ -14,7 +14,7 @@ import { Pencil, Eye, Trash, BrushCleaning } from "lucide-react";
 import { handleDeleteProject } from "@/actions/supabaseDeleteProject";
 import { showToast } from "@/helper/toast";
 import { useRouter } from "next/navigation";
-
+import { useNotifications } from "@/hooks/zustand/useNotifications";
 interface ProjectDetails {
   id: number;
   title: string;
@@ -40,6 +40,9 @@ const columns = [
 ];
 
 const Projects = ({ projectsData }: { projectsData: ProjectDetails[] }) => {
+  // const addNotifications = useNotification((state) => state.addNotification);
+  const addNotification = useNotifications((state) => state.addNotifications);
+
   const [items, setItems] = useState<ProjectDetails[]>(() =>
     projectsData.slice(0, ITEMS_PER_PAGE),
   );
@@ -73,6 +76,7 @@ const Projects = ({ projectsData }: { projectsData: ProjectDetails[] }) => {
       const response = await handleDeleteProject(id);
       if (response?.success) {
         showToast(response.message, "success");
+        addNotification(`You have deleted a project`);
         router.refresh();
       } else {
         showToast(response.message, "error");
