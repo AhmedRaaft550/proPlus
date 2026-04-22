@@ -2,7 +2,7 @@
 
 import { Button } from "@heroui/react";
 import { useState } from "react";
-import ProjectsModal from "@/custom/ui/ProjectsModal";
+import ProjectsModal from "@/custom/ui/modals/ProjectsModal";
 const AddNewProject = () => {
   const [previewModal, setPreviewModal] = useState(false);
 

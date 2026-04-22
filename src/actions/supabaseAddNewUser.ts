@@ -1,6 +1,6 @@
 "use server";
 import { createClient } from "@/lib/subabase/server";
-import { IAddProjectForm } from "@/custom/ui/ProjectsModal";
+import { IAddProjectForm } from "@/custom/ui/modals/ProjectsModal";
 import { revalidatePath } from "next/cache";
 export const handleAddNewProjectAction = async (data: IAddProjectForm) => {
   const subabase = await createClient();

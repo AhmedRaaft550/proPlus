@@ -5,6 +5,7 @@ import { Plus } from "lucide-react";
 import { useForm, Controller } from "react-hook-form";
 import { handleAddNewProjectAction } from "@/actions/supabaseAddNewUser";
 import { showToast } from "@/helper/toast";
+import { useNotifications } from "@/hooks/zustand/useNotifications";
 
 interface ModalProps {
   onClose: () => void;
@@ -41,13 +42,16 @@ export interface IAddProjectForm {
 
 export function ProjectsModal({ onClose, previewModal }: ModalProps) {
   const { handleSubmit, register, control } = useForm<IAddProjectForm>();
+  const addNotification = useNotifications((state) => state.addNotifications);
 
   const handleAddProjectForm = async (data: IAddProjectForm) => {
     try {
       const res = await handleAddNewProjectAction(data);
+      console.log(data, "data");
 
       if (res?.success) {
         showToast(res.message, "success");
+        addNotification(`${data.title} Add to projects list`);
         onClose();
       } else {
         showToast(res.message, "error");

@@ -4,6 +4,7 @@ import Logo from "@/custom/ui/Logo";
 import { Button, Avatar } from "@heroui/react";
 import { useRouter } from "next/navigation";
 import { actionServices } from "@/services/actionsServices";
+import Notifications from "./notifications/Notifications";
 
 const Header = () => {
   const router = useRouter();
@@ -30,6 +31,10 @@ const Header = () => {
             >
               Log out
             </Button>
+          </li>
+
+          <li>
+            <Notifications />
           </li>
 
           <div className="flex items-center gap-3 border-l pl-4 border-divider">
